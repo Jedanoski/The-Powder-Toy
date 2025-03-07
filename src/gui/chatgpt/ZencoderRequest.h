@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "client/http/Request.h"
 #include "gui/chatgpt/ChatGPTModel.h"
 #include "common/String.h"
