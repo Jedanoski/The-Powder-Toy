@@ -92,7 +92,7 @@ void ChatGPTView::NotifyMessageChanged(ChatGPTModel * sender)
         messageLabels.push_back(messageLabel);
 
         // Add edit button
-        AddEditButton("message_id", message.content);
+        AddEditButton(message.id, message.content);
         
         currentY += messageLabel->Size.Y + 10;
     }
