@@ -106,7 +106,28 @@ void ChatGPTView::AddEditButton(String message_id, String message_text)
     editButton->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
     editButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
     editButton->SetActionCallback({ [this, message_id, message_text] {
-        // TODO: Implement edit functionality
+        // Create text input field
+        ui::Textbox* editInput = new ui::Textbox(ui::Point(10, currentY + 30), ui::Point(messagesPanel->Size.X - 40, 30), message_text, "Edit your message here...");
+        editInput->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
+        editInput->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
+        editInput->SetLimit(1024);
+        messagesPanel->AddChild(editInput);
+
+        // Create save button
+        ui::Button* saveButton = new ui::Button(ui::Point(messagesPanel->Size.X - 80, currentY + 30), ui::Point(60, 30), "Save");
+        saveButton->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
+        saveButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
+        saveButton->SetActionCallback({ [this, message_id, editInput, saveButton, editButton] {
+            // Send the updated text to the Zencoder API
+            c->EditMessage("chat_id", message_id, editInput->GetText());
+
+            // Remove the text input field and save button
+            messagesPanel->RemoveChild(editInput);
+            messagesPanel->RemoveChild(saveButton);
+            delete editInput;
+            delete saveButton;
+        }});
+        messagesPanel->AddChild(saveButton);
     }});
     messagesPanel->AddChild(editButton);
 }
