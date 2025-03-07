@@ -117,7 +117,7 @@ void ChatGPTView::AddEditButton(String message_id, String message_text)
         ui::Button* saveButton = new ui::Button(ui::Point(messagesPanel->Size.X - 80, currentY + 30), ui::Point(60, 30), "Save");
         saveButton->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
         saveButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
-        saveButton->SetActionCallback({ [this, message_id, editInput, saveButton, editButton] {
+        saveButton->SetActionCallback({ [this, message_id, editInput, saveButton] {
             // Send the updated text to the Zencoder API
             c->EditMessage("chat_id", message_id, editInput->GetText());
 
@@ -130,6 +130,7 @@ void ChatGPTView::AddEditButton(String message_id, String message_text)
         messagesPanel->AddChild(saveButton);
     }});
     messagesPanel->AddChild(editButton);
+    currentY += 60;
 }
     
     // Scroll to bottom
