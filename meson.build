@@ -419,12 +419,14 @@ endif
 
 project_inc = include_directories([ 'src', 'resources' ])
 
-# Embed VectorGraphics.js as a string in a C++ header file
+# Embed VectorGraphics.ts as a string in a C++ header file
 vector_graphics_js = custom_target(
   'vector_graphics_js',
-  input : files('src/graphics/VectorGraphics.js'),
+  input : files('src/graphics/VectorGraphics.ts'),
   output : 'VectorGraphics_js.h',
   command : [
+    # The TypeScript compiler must be run before Meson is configured
+    # to generate the VectorGraphics.js file.
     python3_prog,
     files('resources/to-array.py'),
     '@OUTPUT@',
