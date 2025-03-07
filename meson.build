@@ -419,6 +419,21 @@ endif
 
 project_inc = include_directories([ 'src', 'resources' ])
 
+# Embed VectorGraphics.js as a string in a C++ header file
+vector_graphics_js = custom_target(
+  'vector_graphics_js',
+  input : files('src/graphics/VectorGraphics.js'),
+  output : 'VectorGraphics_js.h',
+  command : [
+    python3_prog,
+    files('resources/to-array.py'),
+    '@OUTPUT@',
+    '@INPUT@',
+    'vector_graphics_js_content'
+  ],
+  install : false
+)
+
 if host_platform == 'windows'
 	ident_platform = is_64bit ? 'WIN64' : 'WIN32'
 elif host_platform == 'linux'
