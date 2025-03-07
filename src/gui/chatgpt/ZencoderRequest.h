@@ -1,8 +1,10 @@
 #pragma once
 
-#include "src/client/http/Request.h"
-#include "src/gui/chatgpt/ChatGPTModel.h"
-#include "src/common/String.h"
+#pragma once
+
+#include "client/http/Request.h"
+#include "gui/chatgpt/ChatGPTModel.h"
+#include "common/String.h"
 
 class ZencoderRequest : public http::Request
 {
