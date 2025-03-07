@@ -469,6 +469,7 @@ endforeach
 
 powder_files += powder_external_files
 powder_files += data_files
+powder_files += vector_graphics_js
 render_files += data_files
 font_files += data_files
 
