@@ -25,7 +25,16 @@ namespace PowderToyCSharp
 
         public void Step()
         {
-            // Implement simulation logic here
+            // Move each particle randomly
+            foreach (var particle in Particles)
+            {
+                particle.X += (float)(new System.Random().NextDouble() - 0.5);
+                particle.Y += (float)(new System.Random().NextDouble() - 0.5);
+
+                // Keep particles within bounds
+                particle.X = System.Math.Max(0, System.Math.Min(Width, particle.X));
+                particle.Y = System.Math.Max(0, System.Math.Min(Height, particle.Y));
+            }
         }
 
         public Bitmap Render()
