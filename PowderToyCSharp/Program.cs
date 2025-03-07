@@ -30,6 +30,11 @@ namespace PowderToyCSharp
             }
 
             // Run simulation loop here
+            for (int i = 0; i < 100; i++)
+            {
+                simulation.Step();
+                Console.WriteLine($"Step {i + 1}");
+            }
 
             Console.WriteLine("Simulation finished.");
         }
