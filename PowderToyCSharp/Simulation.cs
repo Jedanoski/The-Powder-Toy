@@ -23,13 +23,15 @@ namespace PowderToyCSharp
             Elements[2] = new Element { Name = "Stone", Color = Color.Gray, Density = 2.0f, Flammability = 0.0f, State = 0 };
         }
 
+        private System.Random random = new System.Random();
+
         public void Step()
         {
             // Move each particle randomly
             foreach (var particle in Particles)
             {
-                particle.X += (float)(new System.Random().NextDouble() - 0.5);
-                particle.Y += (float)(new System.Random().NextDouble() - 0.5);
+                particle.X += (float)(random.NextDouble() - 0.5);
+                particle.Y += (float)(random.NextDouble() - 0.5);
 
                 // Keep particles within bounds
                 particle.X = System.Math.Max(0, System.Math.Min(Width, particle.X));
