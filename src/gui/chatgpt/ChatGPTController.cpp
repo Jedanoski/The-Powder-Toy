@@ -231,6 +231,18 @@ ChatGPTView * ChatGPTController::GetView()
 {
     return chatGPTView;
 }
+
+void ChatGPTController::EditMessage(String chat_id, String message_id, String new_text)
+{
+    if (chatGPTModel->IsProcessing())
+        return;
+
+    chatGPTModel->SetProcessing(true);
+
+    // Create and start the request
+    auto request = std::make_unique<ZencoderRequest>(chat_id, message_id, new_text, chatGPTModel);
+    request->Start();
+}
 #include "ChatGPTView.h"
 #include "ChatGPTModel.h"
 #include "gui/interface/Engine.h"
