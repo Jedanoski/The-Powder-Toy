@@ -68,17 +68,17 @@ void ChatGPTView::NotifyMessageChanged(ChatGPTModel * sender)
         messagesPanel->RemoveChild(label);
     }
     messageLabels.clear();
-    
+
     // Add new message labels
     std::deque<ChatMessage> messages = sender->GetMessages();
     int currentY = 5;
-    
+
     for (const auto& message : messages)
     {
         ui::Label* messageLabel = new ui::Label(ui::Point(10, currentY), ui::Point(messagesPanel->Size.X-40, -1), message.content);
         messageLabel->SetMultiline(true);
         messageLabel->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
-        
+
         if (message.isUser)
         {
             messageLabel->Appearance.TextColour = ui::Colour(50, 230, 50);
@@ -87,52 +87,13 @@ void ChatGPTView::NotifyMessageChanged(ChatGPTModel * sender)
         {
             messageLabel->Appearance.TextColour = ui::Colour(230, 230, 50);
         }
-        
+
         messagesPanel->AddChild(messageLabel);
         messageLabels.push_back(messageLabel);
 
-        // Add edit button
-        AddEditButton(message.id, message.content);
-        
         currentY += messageLabel->Size.Y + 10;
     }
-    
-    // Scroll to bottom
-}
 
-void ChatGPTView::AddEditButton(String message_id, String message_text)
-{
-    ui::Button* editButton = new ui::Button(ui::Point(messagesPanel->Size.X - 30, currentY), ui::Point(20, 20), "Edit");
-    editButton->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
-    editButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
-    editButton->SetActionCallback({ [this, message_id, message_text] {
-        // Create text input field
-        ui::Textbox* editInput = new ui::Textbox(ui::Point(10, currentY + 30), ui::Point(messagesPanel->Size.X - 40, 30), message_text, "Edit your message here...");
-        editInput->Appearance.HorizontalAlign = ui::Appearance::AlignLeft;
-        editInput->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
-        editInput->SetLimit(1024);
-        messagesPanel->AddChild(editInput);
-
-        // Create save button
-        ui::Button* saveButton = new ui::Button(ui::Point(messagesPanel->Size.X - 80, currentY + 30), ui::Point(60, 30), "Save");
-        saveButton->Appearance.HorizontalAlign = ui::Appearance::AlignCentre;
-        saveButton->Appearance.VerticalAlign = ui::Appearance::AlignMiddle;
-        saveButton->SetActionCallback({ [this, message_id, editInput, saveButton] {
-            // Send the updated text to the Zencoder API
-            c->EditMessage("chat_id", message_id, editInput->GetText());
-
-            // Remove the text input field and save button
-            messagesPanel->RemoveChild(editInput);
-            messagesPanel->RemoveChild(saveButton);
-            delete editInput;
-            delete saveButton;
-        }});
-        messagesPanel->AddChild(saveButton);
-    }});
-    messagesPanel->AddChild(editButton);
-    currentY += 60;
-}
-    
     // Scroll to bottom
     messagesPanel->SetScrollPosition(currentY);
 }
