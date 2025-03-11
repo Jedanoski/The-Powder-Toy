@@ -64,6 +64,8 @@
 #include "gui/search/SearchView.h"
 #include "gui/tags/TagsController.h"
 #include "gui/tags/TagsView.h"
+#include "gui/chatgpt/ChatGPTController.h"
+#include "gui/chatgpt/ChatGPTView.h"
 
 #include "Config.h"
 #include <SDL.h>
@@ -80,6 +82,7 @@ GameController::GameController():
 	tagsWindow(nullptr),
 	localBrowser(nullptr),
 	options(nullptr),
+	chatGPT(nullptr),
 	debugFlags(0),
 	HasDone(false)
 {
@@ -133,6 +136,10 @@ GameController::~GameController()
 	if(localBrowser)
 	{
 		delete localBrowser;
+	}
+	if(chatGPT)
+	{
+		delete chatGPT;
 	}
 	if (options)
 	{
@@ -1339,6 +1346,13 @@ void GameController::OpenElementSearch()
 		toolList.push_back(ptr.get());
 	}
 	new ElementSearchActivity(this, toolList);
+}
+
+void GameController::OpenChatGPT()
+{
+	if(!chatGPT)
+		chatGPT = new ChatGPTController();
+	ui::Engine::Ref().ShowWindow(chatGPT->GetView());
 }
 
 void GameController::OpenColourPicker()

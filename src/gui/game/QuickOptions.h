@@ -1,4 +1,5 @@
 #include "QuickOption.h"
+#include "ChatGPTOption.h"
 
 class GameController;
 

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "bK4j+gY2I+8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ACER\\Documents\\VISUAL PROJEKTY\\powder\\powder_toy\\The-Powder-Toy\\PowderToyCSharp\\PowderToyCSharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ACER\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\ACER\\.nuget\\packages\\system.drawing.common\\8.0.0\\system.drawing.common.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

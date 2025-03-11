@@ -1,5 +1,8 @@
 #pragma once
 
+// Embedded Lua scripts
+extern const char *powder_toy_lang_lua;
+
 extern "C"
 {
 

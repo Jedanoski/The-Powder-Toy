@@ -10,6 +10,7 @@
 #include "gui/interface/Window.h"
 #include "LuaBit.h"
 #include "LuaComponent.h"
+#include "LuaChatGPT.h"
 #include "prefs/GlobalPrefs.h"
 #include "simulation/Simulation.h"
 #include "simulation/SimulationData.h"
@@ -156,6 +157,7 @@ LuaScriptInterface::LuaScriptInterface(GameController *newGameController, GameMo
 	LuaSimulation::Open(L);
 	LuaSocket::Open(L);
 	LuaTools::Open(L);
+	LuaChatGPT::Open(L);
 	{
 		lua_getglobal(L, "os");
 		lua_pushcfunction(L, osExit);

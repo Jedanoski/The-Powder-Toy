@@ -4,6 +4,7 @@ luaconsole_files = files(
 	'LuaCheckbox.cpp',
 	'LuaCompat.cpp',
 	'LuaComponent.cpp',
+	'LuaChatGPT.cpp',
 	'LuaElements.cpp',
 	'LuaEvent.cpp',
 	'LuaFileSystem.cpp',
