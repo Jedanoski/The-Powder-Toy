@@ -424,6 +424,7 @@ vector_graphics_js = custom_target(
   'vector_graphics_js',
   input : files('src/graphics/VectorGraphics.ts'),
   output : 'VectorGraphics_js.h',
+  depfile: 'VectorGraphics_js.h.dep',
   command : [
     # The TypeScript compiler must be run before Meson is configured
     # to generate the VectorGraphics.js file.
@@ -431,7 +432,6 @@ vector_graphics_js = custom_target(
     files('resources/to-array.py'),
     '@OUTPUT@',
     '@INPUT@',
-    '@DEPFILE@',
     'vector_graphics_js_content'
   ],
   install : false
