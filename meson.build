@@ -501,47 +501,47 @@ endif
 
 clang_tidy_sources = []
 
-if get_option('build_powder')
-	powder_deps += project_deps + [
-		threads_dep,
-		zlib_dep,
-		png_dep,
-		sdl2_dep,
-		lua_dep,
-		curl_dep,
-		fftw_dep,
-		bzip2_dep,
-		json_dep,
-	]
-	if host_platform == 'android'
-		powder_sha = shared_library(
-			app_exe,
-			sources: powder_files,
-			include_directories: project_inc,
-			cpp_args: project_cpp_args,
-			link_args: project_link_args,
-			dependencies: powder_deps,
-			link_depends: copied_dlls,
-			override_options: target_options,
-		)
-		subdir('android')
-	else
-		executable(
-			app_exe,
-			sources: powder_files,
-			include_directories: project_inc,
-			cpp_args: project_cpp_args,
-			win_subsystem: is_debug ? 'console' : 'windows',
-			link_args: project_link_args,
-			dependencies: powder_deps,
-			export_dynamic: project_export_dynamic,
-			install: true,
-			link_depends: copied_dlls,
-			override_options: target_options,
-		)
-	endif
-	clang_tidy_sources += powder_files
-endif
+#if get_option('build_powder')
+#	powder_deps += project_deps + [
+#		threads_dep,
+#		zlib_dep,
+#		png_dep,
+#		sdl2_dep,
+#		lua_dep,
+#		curl_dep,
+#		fftw_dep,
+#		bzip2_dep,
+#		json_dep,
+#	]
+#	if host_platform == 'android'
+#		powder_sha = shared_library(
+#			app_exe,
+#			sources: powder_files,
+#			include_directories: project_inc,
+#			cpp_args: project_cpp_args,
+#			link_args: project_link_args,
+#			dependencies: powder_deps,
+#			link_depends: copied_dlls,
+#			override_options: target_options,
+#		)
+#		subdir('android')
+#	else
+#		executable(
+#			app_exe,
+#			sources: powder_files,
+#			include_directories: project_inc,
+#			cpp_args: project_cpp_args,
+#			win_subsystem: is_debug ? 'console' : 'windows',
+#			link_args: project_link_args,
+#			dependencies: powder_deps,
+#			export_dynamic: project_export_dynamic,
+#			install: true,
+#			link_depends: copied_dlls,
+#			override_options: target_options,
+#		)
+#	endif
+#	clang_tidy_sources += powder_files
+#endif
 
 if get_option('build_render')
 	if host_platform == 'emscripten'
