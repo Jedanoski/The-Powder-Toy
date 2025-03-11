@@ -467,7 +467,7 @@ foreach embedded_file : embedded_files
 		input: file,
 		output: [ '@0@.cpp'.format(name), '@0@.h'.format(name) ],
 		depfile: '@0@.dep'.format(name),
-		command: [ python3_prog, files('resources/to-array.py'), '@OUTPUT0@', '@OUTPUT1@', '@DEPFILE@', '@INPUT@', name ]
+		command: [ python3_prog, files('resources/to-array.py'), '@OUTPUT0@', '@INPUT@', '@DEPFILE@', name ]
 	) ]
 endforeach
 
