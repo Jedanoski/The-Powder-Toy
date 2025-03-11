@@ -431,6 +431,7 @@ vector_graphics_js = custom_target(
     files('resources/to-array.py'),
     '@OUTPUT@',
     '@INPUT@',
+    '@DEPFILE@',
     'vector_graphics_js_content'
   ],
   install : false
