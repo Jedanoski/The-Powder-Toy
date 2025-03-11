@@ -73,7 +73,7 @@ if host_platform == 'windows'
 		rc_conf_depend_files += [
 			'winutf8.xml',
 		]
-		winutf8_xml_path = join_paths(meson.current_source_dir(), 'winutf8.xml')
+	winutf8_xml_path = join_paths(meson.current_source_dir(), 'winutf8.xml')
 	endif
 	rc_conf_data = configuration_data()
 	rc_conf_data.merge_from(conf_data)
@@ -83,15 +83,19 @@ if host_platform == 'windows'
 	rc_conf_data.set('WINUTF8_XML', winutf8_xml_path)
 	rc_conf_data.set('ICON_EXE_ICO', icon_exe_ico_path)
 	rc_conf_data.set('ICON_CPS_ICO', icon_cps_ico_path)
-	powder_external_files += windows_mod.compile_resources(
-		configure_file(
-			input: 'powder-res.template.rc',
-			output: 'powder-res.rc',
-			configuration: rc_conf_data,
-		),
-		depends: rc_conf_depends,
-		depend_files: rc_conf_depend_files,
-	)
+	if host_platform == 'windows' and not (windows_icons or windows_utf8cp)
+		# Skip resource compilation
+	else
+		powder_external_files += windows_mod.compile_resources(
+			configure_file(
+				input: 'powder-res.template.rc',
+				output: 'powder-res.rc',
+				configuration: rc_conf_data,
+			),
+			depends: rc_conf_depends,
+			depend_files: rc_conf_depend_files,
+		)
+	endif
 elif host_platform == 'darwin'
 	configure_file(
 		input: 'Info.template.plist',
