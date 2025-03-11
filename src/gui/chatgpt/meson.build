@@ -3,10 +3,5 @@ powder_files += files(
     'ChatGPTModel.cpp',
     'ChatGPTView.cpp',
     'ZencoderRequest.cpp',
-)powder_files += files(
-    'ChatGPTController.cpp',
-    'ChatGPTModel.cpp',
-    'ChatGPTView.cpp',
-    'ZencoderRequest.cpp',
     'web_search.cpp',
 )
