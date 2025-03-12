@@ -472,9 +472,18 @@ static int partKill(lua_State *L)
 	else
 	{
 		int i = lua_tointeger(L, 1);
-		if (i>=0 && i<NPART)
+		if (i >= 0 && i < NPART)
 			lsi->sim->kill_part(i);
 	}
+	return 0;
+}
+
+static int killParticle(lua_State *L)
+{
+	auto *lsi = GetLSI();
+	int i = lua_tointeger(L, 1);
+	if (i>=0 && i<NPART)
+		lsi->sim->kill_part(i);
 	return 0;
 }
 
@@ -1871,6 +1880,7 @@ void LuaSimulation::Open(lua_State *L)
 		LFUNC(partPosition),
 		LFUNC(partID),
 		LFUNC(partKill),
+		LFUNC(killParticle),
 		LFUNC(partExists),
 		LFUNC(pressure),
 		LFUNC(ambientHeat),
