@@ -154,6 +154,15 @@ static int LuaBlockMapImpl(lua_State *L, ItemType minValue, ItemType maxValue, A
 	return 0;
 }
 
+static int killParticle(lua_State *L)
+{
+	auto *lsi = GetLSI();
+	int i = lua_tointeger(L, 1);
+	if (i>=0 && i<NPART)
+		lsi->sim->kill_part(i);
+	return 0;
+}
+
 template<class Accessor, class ItemType = typename LuaBlockMapHelper<Accessor>::ItemType>
 static int LuaBlockMap(lua_State *L, ItemType minValue, ItemType maxValue, Accessor accessor)
 {
