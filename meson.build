@@ -419,6 +419,25 @@ endif
 
 project_inc = include_directories([ 'src', 'resources' ])
 
+# Embed VectorGraphics.ts as a string in a C++ header file
+vector_graphics_js = custom_target(
+  'vector_graphics_js',
+  input : files('src/graphics/VectorGraphics.ts'),
+  output : 'VectorGraphics_js.h',
+  depfile: 'VectorGraphics_js.h.dep',
+  command : [
+    # The TypeScript compiler must be run before Meson is configured
+    # to generate the VectorGraphics.js file.
+    python3_prog,
+    files('resources/to-array.py'),
+    '@OUTPUT@',
+    '@INPUT@',
+    '@DEPFILE@',
+    'vector_graphics_js_content'
+  ],
+  install : false
+)
+
 if host_platform == 'windows'
 	ident_platform = is_64bit ? 'WIN64' : 'WIN32'
 elif host_platform == 'linux'
@@ -448,12 +467,13 @@ foreach embedded_file : embedded_files
 		input: file,
 		output: [ '@0@.cpp'.format(name), '@0@.h'.format(name) ],
 		depfile: '@0@.dep'.format(name),
-		command: [ python3_prog, files('resources/to-array.py'), '@OUTPUT0@', '@OUTPUT1@', '@DEPFILE@', '@INPUT@', name ]
+		command: [ python3_prog, files('resources/to-array.py'), '@OUTPUT0@', '@INPUT@', '@DEPFILE@', name ]
 	) ]
 endforeach
 
 powder_files += powder_external_files
 powder_files += data_files
+powder_files += vector_graphics_js
 render_files += data_files
 font_files += data_files
 
@@ -481,47 +501,47 @@ endif
 
 clang_tidy_sources = []
 
-if get_option('build_powder')
-	powder_deps += project_deps + [
-		threads_dep,
-		zlib_dep,
-		png_dep,
-		sdl2_dep,
-		lua_dep,
-		curl_dep,
-		fftw_dep,
-		bzip2_dep,
-		json_dep,
-	]
-	if host_platform == 'android'
-		powder_sha = shared_library(
-			app_exe,
-			sources: powder_files,
-			include_directories: project_inc,
-			cpp_args: project_cpp_args,
-			link_args: project_link_args,
-			dependencies: powder_deps,
-			link_depends: copied_dlls,
-			override_options: target_options,
-		)
-		subdir('android')
-	else
-		executable(
-			app_exe,
-			sources: powder_files,
-			include_directories: project_inc,
-			cpp_args: project_cpp_args,
-			win_subsystem: is_debug ? 'console' : 'windows',
-			link_args: project_link_args,
-			dependencies: powder_deps,
-			export_dynamic: project_export_dynamic,
-			install: true,
-			link_depends: copied_dlls,
-			override_options: target_options,
-		)
-	endif
-	clang_tidy_sources += powder_files
-endif
+#if get_option('build_powder')
+#	powder_deps += project_deps + [
+#		threads_dep,
+#		zlib_dep,
+#		png_dep,
+#		sdl2_dep,
+#		lua_dep,
+#		curl_dep,
+#		fftw_dep,
+#		bzip2_dep,
+#		json_dep,
+#	]
+#	if host_platform == 'android'
+#		powder_sha = shared_library(
+#			app_exe,
+#			sources: powder_files,
+#			include_directories: project_inc,
+#			cpp_args: project_cpp_args,
+#			link_args: project_link_args,
+#			dependencies: powder_deps,
+#			link_depends: copied_dlls,
+#			override_options: target_options,
+#		)
+#		subdir('android')
+#	else
+#		executable(
+#			app_exe,
+#			sources: powder_files,
+#			include_directories: project_inc,
+#			cpp_args: project_cpp_args,
+#			win_subsystem: is_debug ? 'console' : 'windows',
+#			link_args: project_link_args,
+#			dependencies: powder_deps,
+#			export_dynamic: project_export_dynamic,
+#			install: true,
+#			link_depends: copied_dlls,
+#			override_options: target_options,
+#		)
+#	endif
+#	clang_tidy_sources += powder_files
+#endif
 
 if get_option('build_render')
 	if host_platform == 'emscripten'

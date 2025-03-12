@@ -2,6 +2,7 @@ gui_files = files(
 	'Style.cpp',
 )
 
+subdir('chatgpt')
 subdir('colourpicker')
 subdir('console')
 subdir('credits')

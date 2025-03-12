@@ -59,6 +59,7 @@ private:
 	TagsController * tagsWindow;
 	LocalBrowserController * localBrowser;
 	OptionsController * options;
+	ChatGPTController * chatGPT;
 	std::vector<std::unique_ptr<DebugInfo>> debugInfo;
 	std::unique_ptr<Snapshot> beforeRestore;
 	unsigned int debugFlags;
@@ -166,6 +167,7 @@ public:
 	void OpenStamps();
 	void OpenElementSearch();
 	void OpenColourPicker();
+	void OpenChatGPT();
 	void PlaceSave(ui::Point position);
 	void ClearSim();
 	void ReloadSim();
@@ -214,4 +216,11 @@ public:
 
 	void SetToolIndex(ByteString identifier, std::optional<int> index);
 	void InitCommandInterface();
+	
+	/**
+	 * @brief Get the ChatGPT controller
+	 *
+	 * @return Pointer to the ChatGPT controller
+	 */
+	ChatGPTController* GetChatGPTController() { return chatGPT; }
 };
